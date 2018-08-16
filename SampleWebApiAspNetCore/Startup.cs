@@ -32,7 +32,9 @@ namespace WebApplication11
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddOptions();
-            services.AddDbContext<FoodDbContext>(opt => opt.UseInMemoryDatabase("FoodDatabase"));
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<FoodDbContext>(opt => opt.UseSqlServer(connection));
+
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOrigins",
